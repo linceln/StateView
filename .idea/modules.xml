@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StateView.iml" filepath="$PROJECT_DIR$/StateView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/state/state.iml" filepath="$PROJECT_DIR$/state/state.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://E:\AndroidStudioProjects\StateView\state\state.iml" filepath="E:\AndroidStudioProjects\StateView\state\state.iml" />
     </modules>
   </component>
 </project>
