@@ -3,18 +3,20 @@ package com.xyz.lince;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.xyz.state.IState;
 import com.xyz.state.StateManager;
 import com.xyz.state.StateView;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IState {
 
     private StateView mStateView;
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TextView tv = findViewById(R.id.tv);
 
-        mStateView = StateManager.initInActivity(tv, new DefaultStateLayout());
+        mStateView = StateManager.init(tv, new DefaultStateLayout(), this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,5 +64,31 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, SecondActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onEmpty(View empty) {
+
+    }
+
+    @Override
+    public void onRetry(View retry) {
+        retry.findViewById(R.id.retry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Snackbar make = Snackbar.make(v, v.getId() + "", Snackbar.LENGTH_SHORT);
+                make.setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        make.dismiss();
+                    }
+                }).show();
+            }
+        });
+    }
+
+    @Override
+    public void onLoad(View load) {
+
     }
 }

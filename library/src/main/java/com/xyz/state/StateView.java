@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
  * 空页面、重试页面、缓冲页面
  * 2018/1/5.
  */
-public class StateView extends FrameLayout implements IState {
+public class StateView extends FrameLayout {
 
     private View mLoad;
     private View mEmpty;
@@ -41,7 +41,7 @@ public class StateView extends FrameLayout implements IState {
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setStateLayout(View view, IStateLayout stateLayout) {
+    public void setStateLayout(View view, IStateLayout stateLayout, IState state) {
         if (view == null) {
             throw new IllegalArgumentException("View cannot be null");
         }
@@ -52,16 +52,15 @@ public class StateView extends FrameLayout implements IState {
         mLoad = mInflater.inflate(stateLayout.getLoadLayout(), this, false);
         mEmpty = mInflater.inflate(stateLayout.getEmptyLayout(), this, false);
         mRetry = mInflater.inflate(stateLayout.getRetryLayout(), this, false);
-        stateLayout.onEmpty(mEmpty);
-        stateLayout.onRetry(mRetry);
-        stateLayout.onLoad(mLoad);
+        state.onEmpty(mEmpty);
+        state.onRetry(mRetry);
+        state.onLoad(mLoad);
         addView(mNormal);
         addView(mLoad);
         addView(mEmpty);
         addView(mRetry);
     }
 
-    @Override
     public void empty() {
         mLoad.setVisibility(View.GONE);
         mEmpty.setVisibility(View.VISIBLE);
@@ -69,7 +68,6 @@ public class StateView extends FrameLayout implements IState {
         mNormal.setVisibility(View.GONE);
     }
 
-    @Override
     public void retry() {
         mLoad.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);
@@ -77,7 +75,6 @@ public class StateView extends FrameLayout implements IState {
         mNormal.setVisibility(View.GONE);
     }
 
-    @Override
     public void load() {
         mLoad.setVisibility(View.VISIBLE);
         mEmpty.setVisibility(View.GONE);
@@ -85,11 +82,34 @@ public class StateView extends FrameLayout implements IState {
         mNormal.setVisibility(View.GONE);
     }
 
-    @Override
     public void content() {
         mLoad.setVisibility(View.GONE);
         mEmpty.setVisibility(View.GONE);
         mRetry.setVisibility(View.GONE);
         mNormal.setVisibility(View.VISIBLE);
     }
+
+/*    public void setLoadLayout(View view) {
+        mLoad = view;
+    }
+
+    public void setLoadLayout(@LayoutRes int layoutRes) {
+        mLoad = mInflater.inflate(layoutRes, this, false);
+    }
+
+    public void setEmptyLayout(View view) {
+        mEmpty = view;
+    }
+
+    public void setEmptyLayout(@LayoutRes int layoutRes) {
+        mEmpty = mInflater.inflate(layoutRes, this, false);
+    }
+
+    public void setRetryLayout(View view) {
+        mRetry = view;
+    }
+
+    public void setRetryLayout(@LayoutRes int layoutRes) {
+        mRetry = mInflater.inflate(layoutRes, this, false);
+    }*/
 }
