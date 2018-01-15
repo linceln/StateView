@@ -11,14 +11,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.xyz.state.IState;
-import com.xyz.state.StateManager;
-import com.xyz.state.StateView;
+import com.xyz.state.S;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements IState {
 
-    private StateView mStateView;
+    private S s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements IState {
         setContentView(R.layout.activity_main);
         TextView tv = findViewById(R.id.tv);
 
-        mStateView = StateManager.init(tv, new DefaultStateLayout(), this);
+        s = S.init(tv, new DefaultStateLayout(), this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -36,16 +35,16 @@ public class MainActivity extends AppCompatActivity implements IState {
                 int i = random.nextInt(4);
                 switch (i) {
                     case 0:
-                        mStateView.empty();
+                        s.empty();
                         break;
                     case 1:
-                        mStateView.load();
+                        s.load();
                         break;
                     case 2:
-                        mStateView.retry();
+                        s.retry();
                         break;
                     case 3:
-                        mStateView.content();
+                        s.content();
                         break;
                 }
             }
@@ -68,7 +67,12 @@ public class MainActivity extends AppCompatActivity implements IState {
 
     @Override
     public void onEmpty(View empty) {
+        empty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     @Override

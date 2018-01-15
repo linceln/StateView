@@ -9,33 +9,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xyz.state.IState;
-import com.xyz.state.StateManager;
-import com.xyz.state.StateView;
+import com.xyz.state.S;
 
 /**
  * 2018/1/5.
  */
 public class TestFragment extends Fragment implements IState {
 
-    private StateView mStateView;
+    private S s;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
-        return StateManager.initInFragment(view, new DefaultStateLayout(), this);
+        s = S.initFragment(view, new DefaultStateLayout(), this);
+        return s.getStateView();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mStateView = (StateView) view;
-        mStateView.empty();
+        s.empty();
     }
 
     @Override
     public void onEmpty(View empty) {
-
     }
 
     @Override
